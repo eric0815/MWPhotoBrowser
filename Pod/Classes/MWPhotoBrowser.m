@@ -169,11 +169,14 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
     //_toolbar.clipsToBounds = YES;
     
-    if (@available(iOS 15.0, *)) {
+    if (@available(iOS 13.0, *)) {
         UIToolbarAppearance *appearance = [UIToolbarAppearance new];
-        appearance.backgroundImage = [_toolbar backgroundImageForToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-        _toolbar.scrollEdgeAppearance = appearance;
+        // 背景色
+        appearance.backgroundColor = [UIColor blackColor];
         _toolbar.standardAppearance = appearance;
+        if (@available(iOS 15.0, *)) {
+            _toolbar.scrollEdgeAppearance = appearance;
+        }
     }
     
     // Toolbar Items
