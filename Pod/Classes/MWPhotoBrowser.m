@@ -167,6 +167,14 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsLandscapePhone];
     _toolbar.barStyle = UIBarStyleBlackTranslucent;
     _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+    //_toolbar.clipsToBounds = YES;
+    
+    if (@available(iOS 15.0, *)) {
+        UIToolbarAppearance *appearance = [UIToolbarAppearance new];
+        appearance.backgroundImage = [_toolbar backgroundImageForToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
+        _toolbar.scrollEdgeAppearance = appearance;
+        _toolbar.standardAppearance = appearance;
+    }
     
     // Toolbar Items
     if (self.displayNavArrows) {
@@ -447,8 +455,19 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     navBar.shadowImage = nil;
     navBar.translucent = YES;
     navBar.barStyle = UIBarStyleBlackTranslucent;
-    [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsLandscapePhone];
+    
+    //[navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    //[navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsLandscapePhone];
+    
+    if (@available(iOS 13.0, *)) {
+        UINavigationBarAppearance *appearance = [UINavigationBarAppearance new];
+        [appearance configureWithDefaultBackground];
+        appearance.backgroundImage = [navBar backgroundImageForBarMetrics:(UIBarMetricsDefault)];
+        appearance.titleTextAttributes = @{NSForegroundColorAttributeName:UIColor.whiteColor};
+        
+        navBar.scrollEdgeAppearance = appearance;
+        navBar.standardAppearance = appearance;
+    }
 }
 
 - (void)storePreviousNavBarAppearance {
